@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#003e85</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#6517B3</color>
+    <color name="black_overlay">#66000000</color>
+
+    <color name="toolbarText">#FFFFFF</color>
+    <color name="toolbarBackground">#000000</color>
+
+    <color name="appBackground">#FFFFFF</color>
+    <color name="appBackgroundDark">#000000</color>
+
+    <color name="defaultTextLight">#FFFFFF</color>
+    <color name="defaultText">#000000</color>
+
+    <color name="defaultBorder">#000000</color>
+    <color name="defaultBorderLight">#FFFFFF</color>
+
+    <color name="buttonBackgroundLight">#FFFFFF</color>
+    <color name="buttonBackground">#000000</color>
+
+    <color name="buttonText">#FFFFFF</color>
+
+    <color name="defaultImage">#000000</color>
+    <color name="defaultImageLight">#FFFFFF</color>
+
+    <color name="onHover">#9FEEEEEE</color>
+    <color name="onHoverDark">#A3303030</color>
+
+    <color name="transactionWithdrawal">#750303</color>
+    <color name="transactionDeposit">#156415</color>
+</resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.alex_.project.SettingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/title_border"
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:fontFamily="@font/dorsa_regular"
+            android:textSize="50sp"
+            android:textColor="@color/defaultTextLight"
+            android:padding="10dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout">
+            <GridLayout
+                android:id="@+id/change_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="6"
+                android:background="@drawable/on_pressed_state"
+                android:rowCount="1"
+                android:padding="10dp">
+
+                <TextView
+                    android:text="@string/change_pin"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_columnSpan="5"
+                    android:layout_columnWeight="2"
+                    android:layout_rowSpan="1"
+                    android:layout_row="0"
+                    android:textAlignment="viewStart"
+                    android:textAppearance="@style/nameTextInGrid"/>
+
+                <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_columnSpan="1"
+                    android:layout_columnWeight="1"
+                    android:layout_rowSpan="1"
+                    android:layout_row="0"
+                    android:src="@drawable/ic_chevron_right_black_24dp"
+                    android:layout_gravity="fill"/>
+            </GridLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

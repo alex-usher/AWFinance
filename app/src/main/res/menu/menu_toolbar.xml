@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.alex_.project.MainActivity">
+
+    <item
+        android:id="@+id/settingsButton"
+        android:orderInCategory="300"
+        android:title="@string/settings"
+        android:icon="@drawable/ic_icons10_settings"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/addButton"
+        android:orderInCategory="300"
+        android:title="@string/add_item"
+        android:icon="@drawable/ic_add_white_24dp"
+        app:showAsAction="always">
+    </item>
+</menu>

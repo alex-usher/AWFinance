@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.alex_.project.MainFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/title_border"
+        android:gravity="center_horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_welcome_back"
+            android:fontFamily="@font/dorsa_regular"
+            android:textSize="50sp"
+            android:textColor="@color/defaultTextLight"
+            android:padding="10dp"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/defaultTextLight"
+        android:textSize="40sp"
+        android:fontFamily="@font/dorsa_regular"
+        android:text="@string/main_your_budgets"
+        android:background="@drawable/title_border_bottom"
+        android:textAlignment="center"
+        android:padding="10dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/appBackgroundDark"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:id="@+id/progressBarContainer">
+
+        </LinearLayout>
+    </ScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/defaultText"
+        android:textSize="40sp"
+        android:fontFamily="@font/dorsa_regular"
+        android:text="@string/main_recent_transactions"
+        android:textAlignment="center"
+        android:padding="10dp"
+        android:background="@drawable/title_border_light"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/transactionBox">
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

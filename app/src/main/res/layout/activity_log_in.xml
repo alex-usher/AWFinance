@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/appBackgroundDark"
+    tools:context="com.example.alex_.project.LogInActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@mipmap/ic_launcher" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <TableRow
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pin_label"
+                android:fontFamily="@font/raleway_light"
+                android:textColor="@color/defaultTextLight"
+                android:textSize="16sp"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/PinEntry"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:enabled="true"
+                android:fontFamily="@font/raleway_light"
+                android:textColor="@color/defaultTextLight"
+                android:textSize="16sp"
+                android:padding="10dp"/>
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/buttonBackgroundLight"
+            android:textColor="@color/defaultText"
+            android:text="@string/submit"
+            android:fontFamily="@font/raleway_light"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:textAllCaps="false"
+            android:onClick="LogIn"/>
+    </LinearLayout>
+
+</LinearLayout>

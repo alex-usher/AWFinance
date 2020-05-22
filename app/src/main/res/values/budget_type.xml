@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="budgetTypes">
+        <item name="daily">Daily</item>
+        <item name="weekly">Weekly</item>
+        <item name="monthly">Monthly</item>
+        <item name="yearly">Yearly</item>
+    </string-array>
+</resources>

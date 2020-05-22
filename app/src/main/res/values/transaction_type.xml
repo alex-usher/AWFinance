@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="typeArray">
+        <item name="deposit">Deposit</item>
+        <item name="withdrawal">Withdrawal</item>
+    </string-array>
+</resources>
