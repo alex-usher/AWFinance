@@ -2,7 +2,7 @@ package com.example.alex_.project;
 
 import java.security.MessageDigest;
 
-public class Crypt {
+public abstract class Crypt {
 
 	public static String hash512(String toHash) {
 		try {

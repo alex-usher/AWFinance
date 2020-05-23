@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
-public class FileHandler {
+public abstract class FileHandler {
 	public static final String DEFAULT_FILENAME = "AppEntry";
 
 	public static String readFile(Context context, String fileName) {

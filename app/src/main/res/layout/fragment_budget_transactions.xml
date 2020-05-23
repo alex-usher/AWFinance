@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BudgetTransactionsFragment">
+
+    <TextView
+        android:id="@+id/budgetName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/defaultTextLight"
+        android:textSize="50sp"
+        android:fontFamily="@font/dorsa_regular"
+        android:background="@drawable/title_border_top"
+        android:textAlignment="center"
+        android:padding="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:background="@color/appBackgroundDark"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:id="@+id/progressBarContainer"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/transactionBox">
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

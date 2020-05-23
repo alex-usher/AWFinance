@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.Currency;
@@ -53,6 +54,13 @@ public class RecentTransactionFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 					editTransaction(transaction);
+				}
+			});
+			gl.setOnLongClickListener(new View.OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					Toast.makeText(getContext(), "Click to Edit.", Toast.LENGTH_SHORT).show();
+					return true;
 				}
 			});
 			gl.setId(transaction.getID());
