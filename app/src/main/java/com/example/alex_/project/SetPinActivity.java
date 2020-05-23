@@ -24,8 +24,8 @@ public class SetPinActivity extends AppCompatActivity {
         pinEntry = findViewById(R.id.PinEntry);
         pinConfirm = findViewById(R.id.PinConfirm);
 
-        String pin = Crypt.Hash512(pinEntry.getText().toString());
-        String checkPin = Crypt.Hash512(pinConfirm.getText().toString());
+        String pin = Crypt.hash512(pinEntry.getText().toString());
+        String checkPin = Crypt.hash512(pinConfirm.getText().toString());
 
         if(pin.equals(checkPin) && pin != null && checkPin != null){
             FileHandler.writeToFile(this, "AppEntry", pin);

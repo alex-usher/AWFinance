@@ -317,7 +317,6 @@ public class DBHelper extends SQLiteOpenHelper {
       Cursor cursor = db.rawQuery("SELECT COALESCE(SUM(Value), 0.0) FROM " + TABLE_TRANSACT + " WHERE Budget='" + budgetId + "'", null);
 
 			if (cursor != null && cursor.moveToFirst()) {
-				System.out.println(cursor.getString(0));
 				amount = Float.parseFloat(cursor.getString(0));
 				cursor.close();
 			}

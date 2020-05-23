@@ -1,14 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.alex_.project.ChangePinFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <TableRow
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/current_pin"
+                android:fontFamily="@font/raleway_light"
+                android:textColor="@color/defaultText"
+                android:padding="10dp"
+                android:textSize="16sp"/>
+            <EditText
+                android:id="@+id/currentPin"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:enabled="true"
+                android:fontFamily="@font/raleway_light"
+                android:textColor="@color/defaultText"
+                android:textSize="16sp"
+                android:padding="10dp"/>
+        </TableRow>
+        <TableRow
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_pin"
+                android:fontFamily="@font/raleway_light"
+                android:textColor="@color/defaultText"
+                android:padding="10dp"
+                android:textSize="16sp"/>
+            <EditText
+                android:id="@+id/newPin"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:enabled="true"
+                android:fontFamily="@font/raleway_light"
+                android:textColor="@color/defaultText"
+                android:textSize="16sp"
+                android:padding="10dp"/>
+        </TableRow>
+        <TableRow
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pin_confirm"
+                android:fontFamily="@font/raleway_light"
+                android:textColor="@color/defaultText"
+                android:padding="10dp"
+                android:textSize="16sp"/>
+            <EditText
+                android:id="@+id/confirmPin"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:enabled="true"
+                android:fontFamily="@font/raleway_light"
+                android:textColor="@color/defaultText"
+                android:textSize="16sp"
+                android:padding="10dp"/>
+        </TableRow>
+        <TableRow
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/buttonBackground"
+                android:textColor="@color/buttonText"
+                android:text="@string/submit"
+                android:fontFamily="@font/raleway_light"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:textAllCaps="false"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

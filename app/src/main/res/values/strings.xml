@@ -11,6 +11,8 @@
     <string name="pin_entry">Enter a PIN: </string>
     <string name="pin_confirm">Confirm PIN: </string>
     <string name="pin_label">PIN: </string>
+    <string name="current_pin">Current PIN:</string>
+    <string name="new_pin">New PIN:</string>
 
     <!-- Navigation !-->
     <string name="open_nav">Open Navigation Drawer</string>

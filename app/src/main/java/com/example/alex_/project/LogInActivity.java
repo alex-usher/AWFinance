@@ -1,7 +1,9 @@
 package com.example.alex_.project;
 
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,26 +11,23 @@ import android.widget.Toast;
 
 public class LogInActivity extends AppCompatActivity {
 
-    EditText pinField;
+	EditText pinField;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in);
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_log_in);
+	}
 
-    public void LogIn(View view){
-        pinField = findViewById(R.id.PinEntry);
+	public void LogIn(View view) {
+		pinField = findViewById(R.id.PinEntry);
 
-        String pinEntered = Crypt.Hash512(pinField.getText().toString());
-        String pinStored = FileHandler.readFile(this, "AppEntry");
+		String pinEntered = Crypt.hash512(pinField.getText().toString());
 
-        if(pinEntered.equals(pinStored)){
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "PIN incorrect.", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
+		if (FileHandler.checkContents(this, pinEntered, FileHandler.DEFAULT_FILENAME)) {
+			startActivity(new Intent(this, MainActivity.class));
+		} else {
+			Toast.makeText(getApplicationContext(), "PIN incorrect.", Toast.LENGTH_SHORT).show();
+		}
+	}
 }

@@ -34,8 +34,8 @@
                 android:id="@+id/change_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="6"
-                android:background="@drawable/on_pressed_state"
+                android:columnCount="10"
+                android:background="@drawable/on_pressed_state_settings"
                 android:rowCount="1"
                 android:padding="10dp">
 
@@ -43,10 +43,11 @@
                     android:text="@string/change_pin"
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
-                    android:layout_columnSpan="5"
-                    android:layout_columnWeight="2"
+                    android:layout_columnSpan="9"
+                    android:layout_columnWeight="9"
                     android:layout_rowSpan="1"
                     android:layout_row="0"
+                    android:elegantTextHeight="true"
                     android:textAlignment="viewStart"
                     android:textAppearance="@style/nameTextInGrid"/>
 

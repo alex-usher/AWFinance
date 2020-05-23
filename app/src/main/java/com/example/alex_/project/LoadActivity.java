@@ -19,7 +19,7 @@ public class LoadActivity extends AppCompatActivity {
     }
 
     public void checkPINFile(){
-        String string = FileHandler.readFile(this,"AppEntry");
+        String string = FileHandler.readFile(this,FileHandler.DEFAULT_FILENAME);
 
         if(string != null){
             Intent intent = new Intent(this, LogInActivity.class);
