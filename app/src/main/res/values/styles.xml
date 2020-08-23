@@ -54,4 +54,15 @@
         <item name="android:textColor" >@color/defaultText</item>
     </style>
 
+    <style name="titleText" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/oswald_extra_light</item>
+        <item name="android:textSize">33sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="subtitleText" parent="titleText">
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+
 </resources>

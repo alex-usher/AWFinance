@@ -16,8 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings"
-            android:fontFamily="@font/dorsa_regular"
-            android:textSize="50sp"
+            android:textAppearance="@style/titleText"
             android:textColor="@color/defaultTextLight"
             android:padding="10dp"/>
     </LinearLayout>

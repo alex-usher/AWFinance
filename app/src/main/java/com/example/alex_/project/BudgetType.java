@@ -1,5 +1,7 @@
 package com.example.alex_.project;
 
+import java.time.temporal.ChronoUnit;
+
 public enum BudgetType {
     Daily,
     Weekly,
@@ -57,6 +59,19 @@ public enum BudgetType {
                 return "year";
             default:
                 return "week";
+        }
+    }
+
+    public static ChronoUnit typeToChronoUnit(BudgetType type) {
+        switch(type) {
+            case Daily:
+                return ChronoUnit.DAYS;
+            case Monthly:
+                return ChronoUnit.MONTHS;
+            case Yearly:
+                return ChronoUnit.YEARS;
+            default:
+                return ChronoUnit.WEEKS;
         }
     }
 }

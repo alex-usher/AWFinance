@@ -8,10 +8,17 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
 	public static final int DB_VERSION = 1;
@@ -122,7 +129,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		List<Transaction> transactionList = new ArrayList<>();
 
 		try {
-			String query = "SELECT * FROM " + TABLE_TRANSACT;
+			String query = "SELECT * FROM " + TABLE_TRANSACT + " ORDER BY TransactionDate DESC";
 
 			SQLiteDatabase db = this.getReadableDatabase();
 			Cursor cursor = db.rawQuery(query, null);
@@ -307,40 +314,94 @@ public class DBHelper extends SQLiteOpenHelper {
 		return new Budget(ID, name, amount, BudgetType.intToType(type), dateCreated, colour);
 	}
 
-	public float getAmountSpent(int budgetId, BudgetType type) {
+	public float getAmountSpent(Budget budget) {
 		float amount = 0;
 		try {
 			SQLiteDatabase db = this.getReadableDatabase();
 //			Cursor cursor = db.rawQuery("SELECT COALESCE(SUM(Value), 0.0) FROM " + TABLE_TRANSACT + " WHERE Budget='"
 //					+ budgetId + "' AND DATE(TransactionDate) BETWEEN DATE('now') AND DATE('now', '+1 " + BudgetType.typeToDuration(type) + "')",
 //				null);
-      Cursor cursor = db.rawQuery("SELECT COALESCE(SUM(Value), 0.0) FROM " + TABLE_TRANSACT + " WHERE Budget='" + budgetId + "'", null);
+
+			LocalDate currentDate = LocalDate.now();
+			LocalDate previousDate = getPreviousIterationDate(budget.getDateCreated(), budget.getType());
+
+
+//			Cursor cursor = db.rawQuery("SELECT COALESCE(SUM(Value), 0.0) FROM " + TABLE_TRANSACT + " WHERE Budget='" + budget.getID() + "'" +
+//				"AND TransactionDate > '" + previousDate + "' AND TransactionDate < '" + currentDate + "'", null);
+
+			Cursor cursor = db.rawQuery("SELECT Value, TransactionDate FROM " + TABLE_TRANSACT + " WHERE Budget=" + budget.getID(), null);
+			System.out.println(cursor);
 
 			if (cursor != null && cursor.moveToFirst()) {
-				amount = Float.parseFloat(cursor.getString(0));
-				cursor.close();
+				do {
+					System.out.println(cursor.getString(0));
+					System.out.println(cursor.getString(1));
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_STORED);
+					LocalDate transactionDate = LocalDate.parse(cursor.getString(1), formatter);
+
+					System.out.println(String.format("Previous date: %s", previousDate));
+					System.out.println(String.format("Current date: %s", currentDate));
+					System.out.println(String.format("Transaction date: %s", transactionDate));
+
+					// TODO: Fix error here with the if statement condition
+					if (transactionDate.compareTo(currentDate) < 0 && transactionDate.compareTo(previousDate) >= 0) {
+						System.out.println(String.format("Processing amount: %s", cursor.getString(0)));
+						amount += Float.parseFloat(cursor.getString(0));
+					}
+
+
+				} while (cursor.moveToNext());
 			}
+
+			cursor.close();
+//
+//			if (cursor != null && cursor.moveToFirst()) {
+//				amount = Float.parseFloat(cursor.getString(0));
+//				cursor.close();
+//			}
 
 			db.close();
 		} catch (SQLiteException e) {
 			e.printStackTrace();
 		}
 
+		System.out.println(amount);
+
 		return amount;
+	}
+
+	private LocalDate getPreviousIterationDate(Timestamp dateCreated, BudgetType type) {
+		LocalDate currentTime = LocalDate.now();
+		LocalDate budgetDate = dateCreated.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+		while (budgetDate.isBefore(currentTime)) {
+			budgetDate = budgetDate.plus(1, BudgetType.typeToChronoUnit(type));
+		}
+
+		budgetDate = budgetDate.minus(1, BudgetType.typeToChronoUnit(type));
+
+		return budgetDate;
 	}
 
 	public float getTotalBudgetSpending() {
 		try {
 			SQLiteDatabase db = this.getReadableDatabase();
-			Cursor cursor = db.rawQuery("SELECT BudgetID, BudgetType FROM " + TABLE_BUDGET, null);
+			Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_BUDGET, null);
 
 			float total = 0;
 
 			if (cursor.moveToFirst()) {
 				do {
 					int id = Integer.parseInt(cursor.getString(0));
-					BudgetType type = BudgetType.stringToBudgetType(cursor.getString(1));
-					total += getAmountSpent(id, type);
+					String name = cursor.getString(1);
+					float amount = Float.parseFloat(cursor.getString(2));
+					BudgetType type = BudgetType.stringToBudgetType(cursor.getString(3));
+					Timestamp timestamp = Timestamp.valueOf(cursor.getString(4));
+					String colour = cursor.getString(5);
+
+					Budget budget = new Budget(id, name, amount, type, timestamp, colour);
+
+					total += getAmountSpent(budget);
 				} while (cursor.moveToNext());
 			}
 
@@ -371,121 +432,4 @@ public class DBHelper extends SQLiteOpenHelper {
 			e.printStackTrace();
 		}
 	}
-
-//    public void updateAllBudgetsSpent(){
-//        try {
-//            List<Transaction> transactions = getAllTransactions();
-//
-//            clearAllBudgetsSpent();
-//
-//            for(int i=0; i<transactions.size(); i++){
-//                Transaction t = transactions.get(i);
-//                Budget b = getBudget(t.getBudget());
-//
-//                Calendar ct = Calendar.getInstance();
-//                ct.setTimeInMillis(new SimpleDateFormat("dd/MM/yyyy").parse(t.getDate()).getTime());
-//
-//                Date dt = new SimpleDateFormat("dd/MM/yyyy").parse(t.getDate());
-//
-//                Calendar cb = Calendar.getInstance();
-//                cb.setTimeInMillis(b.getDateCreated().getTime());
-//
-//                Calendar end = Calendar.getInstance();
-//                Calendar start = Calendar.getInstance();
-//
-//                //reconsider logic
-//                switch(b.getType()){
-//                    case 1://daily
-//                        todayMidnight(start);
-//                        end.setTimeInMillis(start.getTimeInMillis() + (24 * 60 * 60 * 1000)); //midnight next day
-//
-//                        compareAndUpdate(ct, start, end, t, b);
-//
-//                        break;
-//                    case 2://weekly
-//                        int dayOfWeek = cb.get(Calendar.DAY_OF_WEEK);
-//
-//                        todayMidnight(start);
-//
-//                        do {
-//                            start.setTimeInMillis(start.getTimeInMillis() - (24 * 60 * 60 * 1000));
-//                        } while(start.get(Calendar.DAY_OF_WEEK) != dayOfWeek);
-//
-//                        end.setTimeInMillis(start.getTimeInMillis() + (7 * 24 * 60 * 60 * 1000));
-//
-//                        compareAndUpdate(ct, start, end, t, b);
-//
-//                        break;
-//                    case 3://monthly
-//                        int dayOfMonth = cb.get(Calendar.DAY_OF_MONTH);
-//
-//                        todayMidnight(start);
-//
-//                        do {
-//                            start.setTimeInMillis(start.getTimeInMillis() - (24 * 60 * 60 * 1000));
-//                        } while(start.get(Calendar.DAY_OF_MONTH) != dayOfMonth);
-//
-//                        end.setTimeInMillis(start.getTimeInMillis());
-//                        end.set(Calendar.MONTH, (end.get(Calendar.MONTH)+1) % 12);
-//
-//                        compareAndUpdate(ct, start, end, t, b);
-//
-//                        break;
-//                    case 4://yearly
-//                        int dayOfYear = cb.get(Calendar.DAY_OF_YEAR);
-//
-//                        do {
-//                            start.setTimeInMillis(start.getTimeInMillis() - (24 * 60 * 60 * 1000));
-//                        } while(start.get(Calendar.DAY_OF_YEAR) != dayOfYear);
-//
-//                        end.setTimeInMillis(start.getTimeInMillis());
-//                        end.set(Calendar.YEAR, end.get(Calendar.YEAR)+1);
-//
-//                        compareAndUpdate(ct, start, end, t, b);
-//
-//                        break;
-//                    default:
-//                        break;
-//                }
-//            }
-//        } catch(Exception e){
-//            e.printStackTrace();
-//        }
-//    }
-
-//    private int clearAllBudgetsSpent(){
-//        try {
-//            SQLiteDatabase db = this.getWritableDatabase();
-//
-//            ContentValues values = new ContentValues();
-//            values.put("AmountSpent", 0.0);
-//
-//            return db.update(TABLE_BUDGET, values,null, null);
-//        } catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        return 0;
-//    }
-
-//    private int compareAndUpdate(Calendar ct, Calendar start, Calendar end, Transaction t, Budget b){
-//        if((ct.getTimeInMillis() >= start.getTimeInMillis()) && (ct.getTimeInMillis() <= end.getTimeInMillis())) {
-//            if (t.getType()) {
-//                b.setSpent(b.getSpent() - t.getValue());
-//            } else {
-//                b.setSpent(b.getSpent() + t.getValue());
-//            }
-//
-//            return updateBudget(b);
-//        }
-//        return 0;
-//    }
-
-//  private void todayMidnight(Calendar c) {
-//    c.setTime(Calendar.getInstance().getTime()); //midnight of current date
-//    c.set(Calendar.HOUR_OF_DAY, 0);
-//    c.set(Calendar.MINUTE, 0);
-//    c.set(Calendar.SECOND, 0);
-//    c.set(Calendar.MILLISECOND, 0);
-//  }
 }

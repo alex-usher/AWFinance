@@ -34,8 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/edit_transaction"
-            android:fontFamily="@font/dorsa_regular"
-            android:textSize="50sp"
+            android:textAppearance="@style/titleText"
             android:textColor="@color/defaultText"
             android:padding="10dp"/>
     </LinearLayout>

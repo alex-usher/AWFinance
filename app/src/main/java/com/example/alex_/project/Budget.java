@@ -73,7 +73,7 @@ public class Budget {
   }
 
   public float getSpent(DBHelper helper) {
-    return helper.getAmountSpent(bID, bType);
+    return helper.getAmountSpent(this);
   }
 
   public Timestamp getDateCreated() {
