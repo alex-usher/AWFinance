@@ -47,8 +47,8 @@
             android:layout_gravity="fill"
             android:gravity="center"
             android:textColor="@color/defaultImageLight"
-            android:fontFamily="@font/dorsa_regular"
-            android:textSize="40sp"
+            android:fontFamily="@font/raleway_light"
+            android:textSize="15sp"
             android:padding="10dp"/>
     </GridLayout>
     <ScrollView

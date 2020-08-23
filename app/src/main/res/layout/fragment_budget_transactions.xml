@@ -11,8 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/defaultTextLight"
-        android:textSize="50sp"
-        android:fontFamily="@font/dorsa_regular"
+        android:textAppearance="@style/titleText"
         android:background="@drawable/title_border_top"
         android:textAlignment="center"
         android:padding="10dp"/>

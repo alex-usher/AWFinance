@@ -56,7 +56,7 @@
 
     <style name="titleText" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/oswald_extra_light</item>
-        <item name="android:textSize">33sp</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:letterSpacing">-0.02</item>
     </style>
 
