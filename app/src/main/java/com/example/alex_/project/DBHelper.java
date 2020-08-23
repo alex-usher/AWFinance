@@ -8,17 +8,11 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class DBHelper extends SQLiteOpenHelper {
 	public static final int DB_VERSION = 1;
@@ -156,7 +150,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			SQLiteDatabase db = this.getReadableDatabase();
 
 			Cursor cursor = db.query(TABLE_TRANSACT, new String[]{"TransactionID", "PaidTo", "Value", "Description", "TransactionDate", "DateCreated", "Budget"},
-				"Budget=?", new String[]{String.valueOf(budget.getID())}, null, null, null, null);
+				"Budget=?", new String[]{String.valueOf(budget.getID())}, null, null, "TransactionDate DESC", null);
 
 			if (cursor.moveToFirst()) {
 				do {
@@ -318,47 +312,25 @@ public class DBHelper extends SQLiteOpenHelper {
 		float amount = 0;
 		try {
 			SQLiteDatabase db = this.getReadableDatabase();
-//			Cursor cursor = db.rawQuery("SELECT COALESCE(SUM(Value), 0.0) FROM " + TABLE_TRANSACT + " WHERE Budget='"
-//					+ budgetId + "' AND DATE(TransactionDate) BETWEEN DATE('now') AND DATE('now', '+1 " + BudgetType.typeToDuration(type) + "')",
-//				null);
 
 			LocalDate currentDate = LocalDate.now();
 			LocalDate previousDate = getPreviousIterationDate(budget.getDateCreated(), budget.getType());
-
-
-//			Cursor cursor = db.rawQuery("SELECT COALESCE(SUM(Value), 0.0) FROM " + TABLE_TRANSACT + " WHERE Budget='" + budget.getID() + "'" +
-//				"AND TransactionDate > '" + previousDate + "' AND TransactionDate < '" + currentDate + "'", null);
 
 			Cursor cursor = db.rawQuery("SELECT Value, TransactionDate FROM " + TABLE_TRANSACT + " WHERE Budget=" + budget.getID(), null);
 			System.out.println(cursor);
 
 			if (cursor != null && cursor.moveToFirst()) {
 				do {
-					System.out.println(cursor.getString(0));
-					System.out.println(cursor.getString(1));
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT_STORED);
 					LocalDate transactionDate = LocalDate.parse(cursor.getString(1), formatter);
 
-					System.out.println(String.format("Previous date: %s", previousDate));
-					System.out.println(String.format("Current date: %s", currentDate));
-					System.out.println(String.format("Transaction date: %s", transactionDate));
-
-					// TODO: Fix error here with the if statement condition
-					if (transactionDate.compareTo(currentDate) < 0 && transactionDate.compareTo(previousDate) >= 0) {
-						System.out.println(String.format("Processing amount: %s", cursor.getString(0)));
+					if (dateIsBetween(transactionDate, previousDate, currentDate)) {
 						amount += Float.parseFloat(cursor.getString(0));
 					}
-
-
 				} while (cursor.moveToNext());
 			}
 
 			cursor.close();
-//
-//			if (cursor != null && cursor.moveToFirst()) {
-//				amount = Float.parseFloat(cursor.getString(0));
-//				cursor.close();
-//			}
 
 			db.close();
 		} catch (SQLiteException e) {
@@ -368,6 +340,10 @@ public class DBHelper extends SQLiteOpenHelper {
 		System.out.println(amount);
 
 		return amount;
+	}
+
+	public static boolean dateIsBetween(LocalDate comparisonDate, LocalDate startDate, LocalDate endDate) {
+		return comparisonDate.compareTo(startDate) >= 0 && comparisonDate.compareTo(endDate) <= 0;
 	}
 
 	private LocalDate getPreviousIterationDate(Timestamp dateCreated, BudgetType type) {

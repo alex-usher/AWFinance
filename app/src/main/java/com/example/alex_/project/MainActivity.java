@@ -8,7 +8,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
@@ -45,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.navBudgets:
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BudgetsFragment()).commit();
+                        break;
+                    case R.id.navHistory:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
                         break;
                     default:
                         break;

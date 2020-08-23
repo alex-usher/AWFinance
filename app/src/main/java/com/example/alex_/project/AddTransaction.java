@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 public class AddTransaction extends Fragment {
@@ -48,16 +49,13 @@ public class AddTransaction extends Fragment {
         spinner.setSelection(position);
 
         dateBox = v.findViewById(R.id.date);
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                calendar.set(year, month, dayOfMonth);
+        final DatePickerDialog.OnDateSetListener date = (view, year, month, dayOfMonth) -> {
+            calendar.set(year, month, dayOfMonth);
 
-                final SimpleDateFormat sdf = new SimpleDateFormat(DBHelper.DATE_FORMAT_DISPLAYED);
+            final SimpleDateFormat sdf = new SimpleDateFormat(DBHelper.DATE_FORMAT_DISPLAYED, Locale.getDefault());
 
-                dateBox.setText(sdf.format(calendar.getTime()));
-                dateBox.clearFocus();
-            }
+            dateBox.setText(sdf.format(calendar.getTime()));
+            dateBox.clearFocus();
         };
 
         dateBox.setOnClickListener(new View.OnClickListener() {
