@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -68,14 +69,13 @@ public class HistoryFragment extends Fragment {
 		Button submit = v.findViewById(R.id.submit);
 
 		submit.setOnClickListener(v12 -> {
-			ScrollView scrollView = v.findViewById(R.id.scrollable);
-			displayTransactions(v, scrollView);
+			displayTransactions(v, v.findViewById(R.id.linearLayout));
 		});
 
 		return v;
 	}
 
-	private void displayTransactions(View v, ScrollView scrollView) {
+	private void displayTransactions(View v, LinearLayout linearLayout) {
 		try {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DBHelper.DATE_FORMAT_DISPLAYED);
 			LocalDate start = LocalDate.parse(startDate.getText(), formatter);
@@ -90,7 +90,7 @@ public class HistoryFragment extends Fragment {
 				}
 
 				DBHelper helper = new DBHelper(getContext());
-				scrollView.removeAllViews();
+				linearLayout.removeAllViews();
 
 				List<Transaction> transactions = helper.getAllTransactions();
 
@@ -101,7 +101,7 @@ public class HistoryFragment extends Fragment {
 
 				for (Transaction t : transactions) {
 					if (DBHelper.dateIsBetween(t.getDate(), start, end)) {
-						scrollView.addView(DynamicLayoutHandler.generateGrid(getActivity(), t, helper));
+						linearLayout.addView(DynamicLayoutHandler.generateGrid(getActivity(), t, helper));
 					}
 				}
 

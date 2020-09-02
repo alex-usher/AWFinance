@@ -32,29 +32,26 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView nv = findViewById(R.id.nav_view);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    case R.id.navHome:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
-                        break;
-                    case R.id.navRecentTransactions:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecentTransactionFragment()).commit();
-                        break;
-                    case R.id.navBudgets:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BudgetsFragment()).commit();
-                        break;
-                    case R.id.navHistory:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
-                        break;
-                    default:
-                        break;
-                }
-
-                drawer.closeDrawer(GravityCompat.START);//changing menu state
-                return true;
+        nv.setNavigationItemSelectedListener(item -> {
+            switch(item.getItemId()){
+                case R.id.navHome:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
+                    break;
+                case R.id.navRecentTransactions:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecentTransactionFragment()).commit();
+                    break;
+                case R.id.navBudgets:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new BudgetsFragment()).commit();
+                    break;
+                case R.id.navHistory:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HistoryFragment()).commit();
+                    break;
+                default:
+                    break;
             }
+
+            drawer.closeDrawer(GravityCompat.START);//changing menu state
+            return true;
         });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
