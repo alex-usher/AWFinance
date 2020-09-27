@@ -8,6 +8,10 @@ public enum BudgetType {
     Monthly,
     Yearly;
 
+    public static int stringToInt(String string) {
+        return typeToInt(stringToBudgetType(string));
+    }
+
     public static BudgetType stringToBudgetType(String string) {
         switch (string) {
             case "Daily":

@@ -301,7 +301,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		int ID = Integer.parseInt(cursor.getString(0));
 		String name = cursor.getString(1);
 		float amount = Float.parseFloat(cursor.getString(2));
-		int type = Integer.parseInt(cursor.getString(3));
+		int type = BudgetType.stringToInt(cursor.getString(3));
 		Timestamp dateCreated = Timestamp.valueOf(cursor.getString(4));
 		String colour = cursor.getString(5);
 
@@ -317,7 +317,6 @@ public class DBHelper extends SQLiteOpenHelper {
 			LocalDate previousDate = getPreviousIterationDate(budget.getDateCreated(), budget.getType());
 
 			Cursor cursor = db.rawQuery("SELECT Value, TransactionDate FROM " + TABLE_TRANSACT + " WHERE Budget=" + budget.getID(), null);
-			System.out.println(cursor);
 
 			if (cursor != null && cursor.moveToFirst()) {
 				do {
@@ -336,8 +335,6 @@ public class DBHelper extends SQLiteOpenHelper {
 		} catch (SQLiteException e) {
 			e.printStackTrace();
 		}
-
-		System.out.println(amount);
 
 		return amount;
 	}
