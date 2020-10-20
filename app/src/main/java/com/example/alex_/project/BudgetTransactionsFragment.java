@@ -47,7 +47,7 @@ public class BudgetTransactionsFragment extends Fragment {
 		LinearLayout layout = v.findViewById(R.id.progressBarContainer);
 
 		//create grid layout
-		GridLayout grid = DynamicLayoutHandler.generateGrid(getContext(), getActivity(), b, new DBHelper(getContext()));
+		GridLayout grid = DynamicLayoutHandler.generateGrid(getContext(), b, new DBHelper(getContext()));
 		grid.setBackgroundResource(R.color.appBackgroundDark);
 
 		//create progress bar

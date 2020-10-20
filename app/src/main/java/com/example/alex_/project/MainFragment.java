@@ -42,44 +42,8 @@ public class MainFragment extends Fragment {
 		for (int i = 0; i < budgetList.size(); i++) {
 			final Budget budget = budgetList.get(i);
 
-			//create gridlayout
-			GridLayout gl = DynamicLayoutHandler.generateGrid(getContext(), getActivity(), budget, dbHelper);
-
-			//create textview for budget name
-			TextView tvName = new TextView(this.getActivity());
-			tvName.setMinWidth(0);
-			tvName.setMinHeight(GridLayoutManager.LayoutParams.MATCH_PARENT);
-			tvName.setGravity(Gravity.FILL);
-			tvName.setText(budget.getName());
-			tvName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-			tvName.setTextAppearance(R.style.progressBox);
-
-			GridLayout.LayoutParams nameParams = new GridLayout.LayoutParams();
-			nameParams.columnSpec = GridLayout.spec(0, 2, 2f);
-			nameParams.rowSpec = GridLayout.spec(0, 1);
-
-			gl.addView(tvName, nameParams);
-
-			//create progress bar
-			ProgressBar progressBar = DynamicLayoutHandler.generateProgressBar(getActivity(), budget, dbHelper);
-
-			GridLayout.LayoutParams progressParams = new GridLayout.LayoutParams();
-			progressParams.columnSpec = GridLayout.spec(2, 5, 5f);
-			progressParams.rowSpec = GridLayout.spec(0, 1);
-
-			gl.addView(progressBar, progressParams);
-
-			//create text view for %
-			TextView tvPerc = DynamicLayoutHandler.generateTextView(getActivity(), budget, dbHelper);
-
-			GridLayout.LayoutParams percParams = new GridLayout.LayoutParams();
-			percParams.columnSpec = GridLayout.spec(7, 1, 1f);
-			percParams.rowSpec = GridLayout.spec(0, 1);
-
-			gl.addView(tvPerc, percParams);
-
 			//add grid to linear layout
-			linearLayout.addView(gl);
+			linearLayout.addView(DynamicLayoutHandler.createBudgetWithProgress(getContext(), budget, dbHelper));
 		}
 	}
 
