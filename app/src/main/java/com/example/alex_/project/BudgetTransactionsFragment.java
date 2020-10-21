@@ -1,10 +1,6 @@
 package com.example.alex_.project;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,77 +9,84 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.text.NumberFormat;
-import java.util.List;
+import androidx.fragment.app.Fragment;
 
+import java.util.Set;
 
 public class BudgetTransactionsFragment extends Fragment {
 
-	private final Budget b;
+  private final Budget b;
 
-	public BudgetTransactionsFragment() {
-		b = BudgetsFragment.getBudget();
-	}
+  public BudgetTransactionsFragment() {
+    b = BudgetsFragment.getBudget();
+  }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-													 Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_budget_transactions, container, false);
+  @Override
+  public View onCreateView(
+      LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    View v = inflater.inflate(R.layout.fragment_budget_transactions, container, false);
 
-		setTitle(v);
-		drawProgressBox(v);
-		drawTransactionsBox(v);
+    setTitle(v);
+    drawProgressBox(v);
+    drawTransactionsBox(v);
 
-		return v;
-	}
+    return v;
+  }
 
-	private void setTitle(View v) {
-		TextView title = v.findViewById(R.id.budgetName);
-		title.setText("Transactions for " + b.getName());
-	}
+  // Sets the title text of the fragment
+  private void setTitle(View v) {
+    TextView title = v.findViewById(R.id.budgetName);
+    title.setText("Transactions for " + b.getName());
+  }
 
-	private void drawProgressBox(View v) {
-		//get linear layout
-		LinearLayout layout = v.findViewById(R.id.progressBarContainer);
+  private void drawProgressBox(View v) {
+    // get linear layout
+    LinearLayout layout = v.findViewById(R.id.progressBarContainer);
 
-		//create grid layout
-		GridLayout grid = DynamicLayoutHandler.generateGrid(getContext(), b, new DBHelper(getContext()));
-		grid.setBackgroundResource(R.color.appBackgroundDark);
+    // create grid layout
+    GridLayout grid =
+        DynamicLayoutHandler.generateBudgetGrid(getContext(), b, new DBHelper(getContext()));
+    grid.setBackgroundResource(R.color.appBackgroundDark);
 
-		//create progress bar
-		ProgressBar progressBar = DynamicLayoutHandler.generateProgressBar(getActivity(), b, new DBHelper(getContext()));
+    // create progress bar
+    ProgressBar progressBar =
+        DynamicLayoutHandler.generateBudgetProgressBar(
+            getActivity(), b, new DBHelper(getContext()));
 
-		GridLayout.LayoutParams progressParams = new GridLayout.LayoutParams();
-		progressParams.columnSpec = GridLayout.spec(0, 7, 7f);
-		progressParams.rowSpec = GridLayout.spec(0, 1);
+    GridLayout.LayoutParams progressParams = new GridLayout.LayoutParams();
+    progressParams.columnSpec = GridLayout.spec(0, 7, 7f);
+    progressParams.rowSpec = GridLayout.spec(0, 1);
 
-		grid.addView(progressBar, progressParams);
+    grid.addView(progressBar, progressParams);
 
-		//create text view for %
-		TextView percentage = DynamicLayoutHandler.generateTextView(getActivity(), b, new DBHelper(getContext()));
+    // create text view for %
+    TextView percentage =
+        DynamicLayoutHandler.generatePercentageTextView(
+            getActivity(), b, new DBHelper(getContext()));
 
-		GridLayout.LayoutParams percentageParams = new GridLayout.LayoutParams();
-		percentageParams.columnSpec = GridLayout.spec(7, 1, 1f);
-		percentageParams.rowSpec = GridLayout.spec(0, 1);
+    GridLayout.LayoutParams percentageParams = new GridLayout.LayoutParams();
+    percentageParams.columnSpec = GridLayout.spec(7, 1, 1f);
+    percentageParams.rowSpec = GridLayout.spec(0, 1);
 
-		grid.addView(percentage, percentageParams);
+    grid.addView(percentage, percentageParams);
 
-		// add grid to linear layout
-		layout.addView(grid);
-	}
+    // add grid to linear layout
+    layout.addView(grid);
+  }
 
-	private void drawTransactionsBox(View v) {
-		DBHelper dbHelper = new DBHelper(getContext());
-		List<Transaction> transactions = dbHelper.getAllTransactionsInBudget(b);
+  private void drawTransactionsBox(View v) {
+    DBHelper dbHelper = new DBHelper(getContext());
+    Set<Transaction> transactions = dbHelper.getAllTransactionsInBudget(b);
 
-		for(Transaction transaction : transactions) {
-			LinearLayout layout = v.findViewById(R.id.transactionBox);
+    for (Transaction transaction : transactions) {
+      LinearLayout layout = v.findViewById(R.id.transactionBox);
 
-			//create grid layout
-			GridLayout grid = DynamicLayoutHandler.generateGrid(getActivity(), transaction, dbHelper);
+      // create grid layout
+      GridLayout grid =
+          DynamicLayoutHandler.generateTransactionGrid(getActivity(), transaction, dbHelper);
 
-			//add grid layout to view
-			layout.addView(grid);
-		}
-	}
+      // add grid layout to view
+      layout.addView(grid);
+    }
+  }
 }

@@ -12,47 +12,69 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
 public abstract class FileHandler {
-	public static final String DEFAULT_FILENAME = "AppEntry";
+  public static final String DEFAULT_FILENAME = "AppEntry";
 
-	public static String readFile(Context context, String fileName) {
-		try {
-			File dir = context.getFilesDir();
-			File file = new File(dir, fileName + ".txt");
-			if (checkFileExists(file)) {
-				StringBuilder sb = new StringBuilder();
-				BufferedReader br = new BufferedReader(new FileReader(file));
-				String line;
+  /**
+   * Reads file {@code filename} and returns its contents as a string
+   *
+   * @param context - the application context to find the file from
+   * @param fileName - the name of the file to read
+   *
+   * @return the contents of the file in the format of a String
+   */
+  public static String readFile(Context context, String fileName) {
+    File dir = context.getFilesDir();
+    File file = new File(dir, fileName + ".txt");
 
-				while ((line = br.readLine()) != null) {
-					sb.append(line);
-				}
+    try {
+      if (file.exists()) {
+        StringBuilder sb = new StringBuilder();
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
 
-				br.close();
+        while ((line = br.readLine()) != null) {
+          sb.append(line);
+        }
 
-				return sb.toString();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        br.close();
 
-		return null;
-	}
+        return sb.toString();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
-	public static boolean checkFileExists(File file) {
-		return file.exists();
-	}
+    return null;
+  }
 
-	public static void writeToFile(Context context, String fileName, String toWrite) {
-		try {
-			OutputStreamWriter os = new OutputStreamWriter(context.openFileOutput(fileName + ".txt", Context.MODE_PRIVATE));
-			os.write(toWrite);
-			os.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	/**
+	 * Writes the given string to a file of file {@code fileName}. If this file doesn't exist,
+	 * it creates it.
+	 *
+	 * @param context - the application context
+	 * @param fileName - the name of the file to write to
+	 * @param toWrite - the string to write to the file
+	 */
+  public static void writeToFile(Context context, String fileName, String toWrite) {
+    try {
+      OutputStreamWriter os =
+          new OutputStreamWriter(context.openFileOutput(fileName + ".txt", Context.MODE_PRIVATE));
+      os.write(toWrite);
+      os.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 
-	public static boolean checkContents(Context context, String string, String fileName) {
-		return string.equals(readFile(context, fileName));
-	}
+  /**
+   * Used to check the contents of a file are equal to the given string.
+   *
+   * @param context - the application context
+   * @param string - the string to compare the contents of the file to
+   * @param fileName - the name of the file to read
+   * @return - true if string is the same as the contents of the file
+   */
+  public static boolean checkContents(Context context, String string, String fileName) {
+    return string.equals(readFile(context, fileName));
+  }
 }
